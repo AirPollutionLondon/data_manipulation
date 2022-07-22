@@ -22,6 +22,28 @@ def add_categories_to_csv(csv: List[List[str]], line: str) -> None:
             row.append(name_and_data[len(name_and_data) - 1])
     csv.append(row)
 
+def add_serial_and_active_status_to_csv(active_status: bool, serial_num: str, csv: List[List[str]]) -> None:
+    """ Add the serial number and the status of the sensor to each row within the .csv file.
+
+        Params:
+            - active_status: Boolean value representing whether the sensor is on or off
+            - serial_num: String value representing the serial number of the sensor
+            - csv: List[List[str]] representing the .csv file
+    """
+    first_row = True
+    for row in csv:
+        if first_row:
+            row.append("Status")
+            row.append("Serial")
+            print(row)
+            first_row = False
+        else:
+            if active_status:
+                row.append("Active")
+            else:
+                row.append("Inactive")
+            row.append(serial_num)
+
 def add_data_to_csv(csv: List[List[str]], line: str) -> None:
     """ Add the values of each category to the CSV.
 
@@ -65,19 +87,31 @@ def main(path: str) -> None:
         Params:
             path: A String which represents the path of the text file.
     """
+    # Add columns for lines 0 and 1 which contain the serial number (which is an additional column for all rows)
+    # and the status of the sensors (active v inactive) which is also a column for all rows
     csv = []
     with open(path) as file:
+        serial_num = ""
+        active_status = ""
         csv = []
-        skipped = 0
+        line_num = 0
         categories_not_added = True
         for line in file:
-            if skipped < 3:
-                skipped += 1
+            if line_num == 0:
+                line_num += 1
+                active_status = line.split(": ")[1]
+            elif line_num == 1:
+                line_num += 1
+                serial_num = line.split(": ")[1]
+            elif line_num == 2:
+                line_num += 1
                 continue
-            if categories_not_added:
-                add_categories_to_csv(csv, line)
-                categories_not_added = False
-            add_data_to_csv(csv, line)
+            else:
+                if categories_not_added:
+                    add_categories_to_csv(csv, line)
+                    categories_not_added = False
+                add_data_to_csv(csv, line)
+        add_serial_and_active_status_to_csv(active_status, serial_num, csv)
         convert_to_csv(path, csv)
         file.close()
 
