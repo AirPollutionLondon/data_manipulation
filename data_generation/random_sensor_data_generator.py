@@ -8,8 +8,25 @@ This is a temporary script file.
 import pandas as pd
 import random
 from datetime import datetime, timedelta
+USER_DATA = "simulated_user_data.csv"
 
 def generate_timestamp(start_date, end_date):
+    """
+    Generate hourly timestamps from start date until end date 
+
+    Parameters
+    ----------
+    start_date : datetime
+        The start date.
+    end_date : datetime
+        The end date.
+
+    Yields
+    ------
+    delta
+        A delta for the timestamp
+
+    """
     """ Function: generates hourly timestamp series from start date until 
                   end date   
         Parameters: start_date (datetime), end_date(datetime)
@@ -25,10 +42,23 @@ def generate_timestamp(start_date, end_date):
     return delta
 
 def generate_lst(num, min_ran, max_ran):
-    """ Function: generates a list of random numbers in the specified number 
-                  range
-        Parameters: num (int), min_ran (int), max_ran (int)
-        Returns: a list of randomly generated numbers
+    """
+    Generates a list of random numbers in the specified number range.
+
+    Parameters
+    ----------
+    num : int
+        The number of times to run the random.randint for 
+    min_ran : int
+        The min of the range of random numbers in the list
+    max_ran : int
+        The max of the range of the random numbers in the list
+
+    Returns
+    -------
+    data_lst : list
+        A list of random generated numbers within the specified range
+
     """
     
     # Create an empty lst
@@ -45,11 +75,12 @@ def generate_lst(num, min_ran, max_ran):
 def main():
     # Create an empty dataframe, with the defined column names
     sensor_df = pd.DataFrame(columns = \
-                             ["TimeStamp", "Sensor ID", "Owner ID", 
+                             ["TimeStamp", "Sensor ID", "User ID", 
                               "Serial Number","Status", "Latitude", 
-                              "Longitude", "tVOC","CO2eq", "PM1.0CF", 
-                              "PM2.5CF", "PM10CF","PM1.0AE", "PM2.5AE", 
-                              "PM10AE:14"])
+                              "Longitude"])
+    
+    # Read in the user csv file as a dataframe    
+    user_df = pd.read_csv(USER_DATA)
     
     # Create an empt timestamp list
     timestamp_lst = []
@@ -69,14 +100,9 @@ def main():
             sensor_id_lst.append(sensor_id)
     sensor_df["Sensor ID"] = sensor_id_lst
     
-    # Generate a list of random owner ids and add to dataframe
-    owner_id_lst = []
-    for i in range(17544):
-        owner_id = random.randint(0, 9000000000)
-        if owner_id not in owner_id_lst:
-            owner_id_lst.append(owner_id)
-            
-    sensor_df["Owner ID"] = owner_id_lst
+    # Grab the user id from the user csv file and add it to the sensor 
+    # dataframe
+    sensor_df["User ID"] = user_df["User ID"]
     
     # Generate a list of random serial numbers and add to dataframe
     serial_lst = []
@@ -106,46 +132,6 @@ def main():
     # the longitude column in the dataframe
     long_data = generate_lst(17544, -180, 180)
     sensor_df["Longitude"] = long_data
-    
-    # Generate a list of random VOC emissions within the range and add to 
-    # the VOC(ppb) column in the dataframe
-    voc_data = generate_lst(17544, 0, 325)
-    sensor_df["tVOC"] = voc_data
-    
-    # Generate a list of random CO2 emissions within the range and add to 
-    # the CO2(ppm) column in the dataframe
-    co2_data = generate_lst(17544, 0, 500)
-    sensor_df["CO2eq"] = co2_data
-    
-    # Generate a list of random pm1cf emissions within the range and add to 
-    # the dataframe
-    pm1cf_data = generate_lst(17544, 0, 500)
-    sensor_df["PM1.0CF"] = pm1cf_data
-    
-    # Generate a list of random pm2.5cf emissions within the range and addd to 
-    # the dataframe
-    pm25cf_data = generate_lst(17544, 0, 500)
-    sensor_df["PM2.5CF"] = pm25cf_data
-    
-    # Generate a list of random pm10cf emissions within the range and add to 
-    # the dataframe
-    pm10cf_data = generate_lst(17544, 0, 500)
-    sensor_df["PM10CF"] = pm10cf_data
-    
-    # Generaate a list of random pm1ae emissions within the range and add to 
-    # the dataframe
-    pm1ae_data = generate_lst(17544, 0, 500)
-    sensor_df["PM1.0AE"] = pm1ae_data
-    
-    # Generate a list of random pm2.5ae emissions within the range and add to 
-    # the dataframe
-    pm25ae_data = generate_lst(17544, 0, 500)
-    sensor_df["PM2.5AE"] = pm25ae_data
-    
-    # Generate a list of pm10ae:14 emissions within the range and add to the 
-    # dataframe
-    pm10ae14_data = generate_lst(17544, 0, 500)
-    sensor_df["PM10AE:14"] = pm10ae14_data 
     
     # Export the dataframe as as csv file
     sensor_df.to_csv('simulated_sensor_data.csv', index = False)
