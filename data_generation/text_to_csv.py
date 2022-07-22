@@ -87,8 +87,6 @@ def main(path: str) -> None:
         Params:
             path: A String which represents the path of the text file.
     """
-    # Add columns for lines 0 and 1 which contain the serial number (which is an additional column for all rows)
-    # and the status of the sensors (active v inactive) which is also a column for all rows
     csv = []
     with open(path) as file:
         serial_num = ""
