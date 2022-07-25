@@ -41,6 +41,15 @@ def generate_lst(num, min_ran, max_ran):
     
     return data_lst
 
+def generate_lst_float(num, min_ran, max_ran):
+    data_lst = []
+    
+    for i in range(num):
+        data = random.uniform(min_ran, max_ran)
+        data_lst.append(data)
+        
+    return data_lst
+
 def main():
     # Create an empty dataframe, with the defined column names
     sensor_df = pd.DataFrame(columns = \
@@ -84,12 +93,12 @@ def main():
         
     # Generate a list of random latitudes within the range and add to 
     # latittude column in the dataframe
-    lat_data = generate_lst(17544, -90, 90)
+    lat_data = generate_lst_float(17544, 51.29528, 51.704214)
     sensor_df["latitude"] = lat_data
     
     # Generate a list of random longitudes within the range and add to 
     # the longitude column in the dataframe
-    long_data = generate_lst(17544, -180, 180)
+    long_data = generate_lst_float(17544, -0.495984, 0.155427)
     sensor_df["longitude"] = long_data
     
     # Export the dataframe as as csv file
