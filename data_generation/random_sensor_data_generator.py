@@ -125,12 +125,12 @@ def main():
         
     # Generate a list of random latitudes within the range and add to 
     # latittude column in the dataframe
-    lat_data = generate_lst(17544, -90, 90)
+    lat_data = generate_lst(17544, 51.29528, 51.704214)
     sensor_df["Latitude"] = lat_data
     
     # Generate a list of random longitudes within the range and add to 
     # the longitude column in the dataframe
-    long_data = generate_lst(17544, -180, 180)
+    long_data = generate_lst(17544, -0.495984, 0.155427)
     sensor_df["Longitude"] = long_data
     
     # Export the dataframe as as csv file
