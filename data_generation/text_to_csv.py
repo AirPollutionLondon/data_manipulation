@@ -77,7 +77,7 @@ def convert_to_csv(path: str, csv: List[List[str]]) -> None:
     with open(path[:len(path) - 4] + ".csv", "w") as new_file:
         for row in csv:
             new_file.write(",".join(row))
-            new_file.write("\n")
+            #new_file.write("\n")
         new_file.close()
 
 def main(path: str) -> None:
@@ -102,7 +102,6 @@ def main(path: str) -> None:
                 serial_num = line.split(": ")[1]
             elif line_num == 2:
                 line_num += 1
-                continue
             else:
                 if categories_not_added:
                     add_categories_to_csv(csv, line)
