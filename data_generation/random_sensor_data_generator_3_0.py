@@ -5,12 +5,13 @@ Spyder Editor
 This is a temporary script file.
 """
 
+from typing import List
 import pandas as pd
 import random
 USER_DATA = "simulated_user_data.csv"
 
 
-def generate_lst(num, min_ran, max_ran):
+def generate_lst(num: int, min_ran: int, max_ran: int) -> List[int]:
     """
     Generates a list of random numbers in the specified number range.
 
@@ -41,7 +42,7 @@ def generate_lst(num, min_ran, max_ran):
     
     return data_lst
 
-def generate_lst_float(num, min_ran, max_ran):
+def generate_lst_float(num: int, min_ran: float, max_ran: float) -> List[float]:
     data_lst = []
     
     for i in range(num):
