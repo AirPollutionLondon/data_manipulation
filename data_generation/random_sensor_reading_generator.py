@@ -7,9 +7,10 @@ Created on Fri Jul 22 11:29:16 2022
 
 import random
 import pandas as pd
+from typing import List
 SENSOR_DATA = "simulated_sensor_data.csv"
 
-def generate_lst(num, min_ran, max_ran):
+def generate_lst(num: int, min_ran: int, max_ran: int) -> List[int]:
     """
     Generates a list of random numbers of length num in the specified number 
     range.

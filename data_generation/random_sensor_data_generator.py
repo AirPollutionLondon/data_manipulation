@@ -8,9 +8,10 @@ This is a temporary script file.
 import pandas as pd
 import random
 from datetime import datetime, timedelta
+from typing import List
 USER_DATA = "simulated_user_data.csv"
 
-def generate_timestamp(start_date, end_date):
+def generate_timestamp(start_date: datetime, end_date: datetime) -> timedelta:
     """
     Generate hourly timestamps from start date until end date 
 
@@ -41,7 +42,7 @@ def generate_timestamp(start_date, end_date):
     
     return delta
 
-def generate_lst(num, min_ran, max_ran):
+def generate_lst(num: int, min_ran: int, max_ran: int) -> List[int]:
     """
     Generates a list of random numbers in the specified number range.
 

@@ -9,8 +9,9 @@ import pandas as pd
 import random
 import names
 import string
+from typing import List
 
-def generate_lst(num, min_ran, max_ran):
+def generate_lst(num: int, min_ran: int, max_ran: int) -> List[int]:
     """
     Generates a list of random numbers of length num in the specified number 
     range.
@@ -43,7 +44,7 @@ def generate_lst(num, min_ran, max_ran):
     return data_lst
 
 
-def random_word(y):
+def random_word(y: int) -> str:
     """
     Create random characters of a specific length
 

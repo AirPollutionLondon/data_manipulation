@@ -8,6 +8,7 @@ Created on Fri Jul 22 11:29:16 2022
 import random
 import pandas as pd
 from datetime import datetime, timedelta
+from typing import List
 SENSOR_DATA = "simulated_sensor_data.csv"
 
 """----------------BEGIN DATA TYPES TO GENERATE----------------"""
@@ -22,7 +23,7 @@ SENSOR_DATA = "simulated_sensor_data.csv"
 """All AEC values are similar and only rarely deviate from each other"""
 """-----------------END DATA TYPES TO GENERATE-----------------""" 
 
-def generate_lst(num, min_ran, max_ran):
+def generate_lst(num: int, min_ran: int, max_ran: int) -> List[int]:
     """
     Generates a list of random numbers of length num in the specified number 
     range.
@@ -54,7 +55,7 @@ def generate_lst(num, min_ran, max_ran):
     
     return data_lst
 
-def generate_timestamp(start_date, end_date):
+def generate_timestamp(start_date: datetime, end_date: datetime) -> timedelta:
     """
     Generate hourly timestamps from start date until end date 
 
