@@ -2,7 +2,7 @@ import csv
 import json
 import argparse
  
-def create_json_file(csv_path: str) -> None:
+def create_json_file(csv_path: str, pk: str = 'sensorReadingID') -> None:
     """
     Converts a csv file into a json file by reading in the csv file and then 
     creating a primary key for the json file.
@@ -28,7 +28,7 @@ def create_json_file(csv_path: str) -> None:
         for rows in csv_reader:
             # Set a primary key to the dicitonary and then append the rest of 
             # the data as values
-            key = rows['Serial']
+            key = rows[pk]
             data[key] = rows
     # Open the json file as a writer and use json.dumps() to dump data into 
     # the json file
@@ -48,9 +48,29 @@ def main(csv_path: str) -> None:
     None.
     """
     create_json_file(csv_path)
+
+def main(csv_path: str, primary_key: str) -> None:
+    """
+    Main method to execute creating a .json from the .csv
+    Parameters
+    ----------
+    csv_path : string
+        Path to the csv file
+    primary_key : string
+        Column header to base the .json file off of
+
+    Returns
+    -------
+    None.
+    """
+    create_json_file(csv_path, primary_key)
     
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('csv_path', help="Name of the text file to be processed.")
+    parser.add_argument('csv_path', help="Path of the .csv file to be processed.")
+    parser.add_argument('--primary_key', '-p', help="Name of the column-header corresponding to the primary key of the .csv file", required=False)
     args = parser.parse_args()
-    main(args.csv_path)
+    if args.primary_key != None:
+        main(args.csv_path, args.primary_key)
+    else:
+        main(args.csv_path)
