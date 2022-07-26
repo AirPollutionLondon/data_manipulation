@@ -30,10 +30,8 @@ def create_json_file(csv_path: str) -> None:
             # the data as values
             key = rows['Serial']
             data[key] = rows
-        print(data)
     # Open the json file as a writer and use json.dumps() to dump data into 
     # the json file
-    print(csv_path[:len(csv_path) - 4] + ".json")
     with open(csv_path[:len(csv_path) - 4] + ".json", 'w', encoding='utf-8') as jsonfile:
         jsonfile.write(json.dumps(data, indent=4))
 
@@ -55,5 +53,4 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('csv_path', help="Name of the text file to be processed.")
     args = parser.parse_args()
-    print(args.csv_path)
     main(args.csv_path)
