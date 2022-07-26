@@ -35,7 +35,6 @@ def add_serial_and_active_status_to_csv(active_status: bool, serial_num: str, cs
         if first_row:
             row.append("Status")
             row.append("Serial")
-            print(row)
             first_row = False
         else:
             if active_status:
