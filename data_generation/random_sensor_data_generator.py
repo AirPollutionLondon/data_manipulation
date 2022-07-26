@@ -10,20 +10,6 @@ import random
 from datetime import datetime, timedelta
 USER_DATA = "simulated_user_data.csv"
 
-"""----------------BEGIN DATA TYPES TO GENERATE----------------"""
-"""1. VOC in ppb: known range 0 through 3086 +/- 10% = 0 -> 3300"""
-"""2. CO2 in ppm: known range 400 through 25000 +/- 10% = 360 -> 27500"""
-"""3. SPM1.0: known range 0 through 0 +/- 10% = 0 -> 0"""
-"""4. SPM2.5: known range 0 through 3086, same as VOC"""
-"""5. SPM10: known range 7 through 10 +/- 10% = 6 -> 11"""
-"""6. AEC1: known range 7 through 11 +/- 10% = 6 -> 12"""
-"""7. AEC2.5: known range 7 through 10 +/- 10% = 6 -> 11"""
-"""8. AEC1.0: known range 7 through 10 +/- 10% = 6 -> 11"""
-"""All AEC values are similar and only rarely deviate from each other"""
-"""-----------------END DATA TYPES TO GENERATE-----------------"""
-
-
-
 def generate_timestamp(start_date, end_date):
     """
     Generate hourly timestamps from start date until end date 
