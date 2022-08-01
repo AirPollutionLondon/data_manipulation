@@ -1,0 +1,156 @@
+import argparse
+import random
+import pandas as pd
+import argparse
+from datetime import datetime, timedelta
+from typing import List
+
+def make_list_no_repeat(count: int, min: int, max: int) -> List[int]:
+    out = []
+    for i in range(count):
+        elem = random.randint(min, max)
+        if elem not in out:
+            out.append(elem)
+        else:
+            i -= 1
+
+def generate_lst(num: int, min_ran: int, max_ran: int) -> List[int]:
+    """
+    Generates a list of random numbers of length num in the specified number 
+    range.
+
+    Parameters
+    ----------
+    num : int
+        The number of times to run the random.randint for 
+    min_ran : int
+        The min of the range of random numbers in the list
+    max_ran : int
+        The max of the range of the random numbers in the list
+
+    Returns
+    -------
+    data_lst : list
+        A list of random generated numbers within the specified range
+
+    """
+    
+    # Create an empty lst
+    data_lst = []
+    
+    # Iterate over each number in the specified range and generate a random 
+    # number and then adding it to the list. 
+    for i in range(num):
+        data = random.randint(min_ran, max_ran)
+        data_lst.append(data)
+    
+    return data_lst
+
+def generate_timestamp(hours, start_date: datetime) -> timedelta:
+    """
+    Generate hourly timestamps from start date until end date 
+
+    Parameters
+    ----------
+    start_date : datetime
+        The start date.
+    end_date : datetime
+        The end date.
+
+    Yields
+    ------
+    delta
+        A delta for the timestamp
+
+    """
+    """ Function: generates hourly timestamp series from start date until 
+                  end date   
+        Parameters: start_date (datetime), end_date(datetime)
+        Returns: the timedelta
+    """
+    
+    # Create one time stamp per hour until the datetime reaches the end date
+    delta = timedelta(minutes = 1)
+    count = 0
+    while count < hours:
+        yield start_date
+        start_date += delta
+        count += 1
+    
+    return delta
+
+def main(count: int, out_path: str, data_path: str):
+    # Generate an empty dataframe with the specified columns
+
+    #   sensorReadingID: int, serialNumber: str, timeStamp: timestamp, 
+    #   VOC: int, CO2: int, SPM1: int, SPM25: int, SPM10: int, 
+    #   AEC1: int, AEC25: int, AEC10: int, status: str, lat: int, lon: int
+
+    sensor_reading_df = pd.DataFrame(columns = ["sensorReadingID", "serialNumber", "timeStamp", "VOC", "CO2", "SPM1", "SPM25", "SPM10", "AEC1", "AEC25", "AEC10", "status", "lat", "lon"])    
+
+    sensor_df = pd.read_csv(data_path)
+
+    sensor_reading_df["sensorReadingID"] = range(count)
+    
+    serial_list = [random.choice(sensor_df["serialNumber"]) for _ in range(count)]
+    sensor_reading_df["serialNumber"] = [random.choice(sensor_df["serialNumber"]) for _ in range(count)]
+        
+    # Add the timestamp_lst into the df under column timestamp
+    sensor_reading_df["timeStamp"] = [time.strftime("%Y-%m-%d %H:%M") for time in generate_timestamp(count, datetime(2020, 1, 1, 0, 0))]
+    
+    # Generate a list of random VOC emissions within the range and add to 
+    # the VOC(ppb) column in the dataframe
+    sensor_reading_df["VOC"] = generate_lst(count, 0, 3300)
+    
+    # Generate a list of random CO2 emissions within the range and add to 
+    # the CO2(ppm) column in the dataframe
+    sensor_reading_df["CO2"] = generate_lst(count, 360, 27500)
+    
+    # Generate a list of random pm1cf emissions within the range and add to 
+    # the dataframe
+    sensor_reading_df["SPM1"] = generate_lst(count, 0, 1)
+    
+    # Generate a list of random pm2.5cf emissions within the range and addd to 
+    # the dataframe
+    sensor_reading_df["SPM25"] = generate_lst(count, 0, 1)
+    
+    # Generate a list of random pm10cf emissions within the range and add to 
+    # the dataframe
+    sensor_reading_df["SPM10"] = generate_lst(count, 6, 11)
+    
+    # Generaate a list of random pm1ae emissions within the range and add to 
+    # the dataframe
+    sensor_reading_df["AEC1"] = generate_lst(count, 6, 12)
+    
+    # Generate a list of random pm2.5ae emissions within the range and add to 
+    # the dataframe
+    sensor_reading_df["AEC25"] = generate_lst(count, 6, 11)
+    
+    # Generate a list of pm10ae:14 emissions within the range and add to the 
+    # dataframe
+    sensor_reading_df["AEC10"] = generate_lst(count, 6, 11)
+
+    sensor_reading_df["status"] = ["Active" for _ in range(count)]
+
+    # Load lats and lons from Sensor Data
+    sensor_reading_df["lat"] = [pd.Series.to_list(sensor_df.loc[sensor_df["serialNumber"] == serial, 'lat'])[0] for serial in serial_list]
+
+    sensor_reading_df["lon"] = [pd.Series.to_list(sensor_df.loc[sensor_df["serialNumber"] == serial, 'lon'])[0] for serial in serial_list]
+    
+    # Export the dataframe as a csv file
+    sensor_reading_df.to_csv(out_path, index = False)
+    
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("path", help = "Path to which to write the .csv")
+    parser.add_argument("sensor_data_path", help = "Path from which to pull sensor metadata.")
+    parser.add_argument("-c", "--count", help = "Number of entries to write.")
+    args = parser.parse_args()
+    count = 10000
+    if args.count != None:
+        count = int(args.count)
+    main(count, args.path, args.sensor_data_path)
+    
+    
+    
+    
