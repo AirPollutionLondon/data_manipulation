@@ -3,18 +3,14 @@ import json
 import argparse
  
 def create_json_file(csv_path: str, pk: str = 'sensorReadingID') -> None:
-    """
-    Converts a csv file into a json file by reading in the csv file and then 
-    creating a primary key for the json file.
+    """ 
+        Converts a csv file into a json file by reading in the csv file and then 
+        creating a primary key for the json file.
 
-    Parameters
-    ----------
-    csv_path : string
-        Path to the csv file
+        Params
+            - csv_path : str, path to the csv file
 
-    Returns
-    -------
-    None.
+        Returns: None.
     """
     
     # Create an empty dictionary to store data
@@ -37,31 +33,24 @@ def create_json_file(csv_path: str, pk: str = 'sensorReadingID') -> None:
 
 def main(csv_path: str) -> None:
     """
-    Main method to execute creating a .json from the .csv
-    Parameters
-    ----------
-    csv_path : string
-        Path to the csv file
+        Given a csv, create a json.
+        
+        Params:
+            - csv_path: str, path to the csv file
 
-    Returns
-    -------
-    None.
+        Returns: None.
     """
     create_json_file(csv_path)
 
 def main(csv_path: str, primary_key: str) -> None:
     """
-    Main method to execute creating a .json from the .csv
-    Parameters
-    ----------
-    csv_path : string
-        Path to the csv file
-    primary_key : string
-        Column header to base the .json file off of
+        Given a csv and a primary key, create a json.
+        
+        Params:
+            - csv_path: str, path to the csv file
+            - primary_key: str, column header to base the .json file off of
 
-    Returns
-    -------
-    None.
+        Returns: None.
     """
     create_json_file(csv_path, primary_key)
     
