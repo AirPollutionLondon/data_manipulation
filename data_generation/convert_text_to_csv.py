@@ -113,6 +113,6 @@ def main(path: str) -> None:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('path', help="Path of the text file to be processed.")
+    parser.add_argument('path', help = "Path of the text file to be processed.")
     args = parser.parse_args()
     main(args.path)
