@@ -2,11 +2,14 @@ import argparse
 from typing import List
 
 def add_categories_to_csv(csv: List[List[str]], line: str) -> None:
-    """ Add the headers of each of the categories to the CSV.
+    """ 
+        Add the headers of each of the categories to the CSV.
 
         Params:
             - csv: List[List[str]] which represents the csv which will be written to each row is a list
             - line: a line (String) which contains the headers for each column
+        
+        Returns: None.
     """
     columns = line.split(": ")
     row = []
@@ -23,12 +26,15 @@ def add_categories_to_csv(csv: List[List[str]], line: str) -> None:
     csv.append(row)
 
 def add_serial_and_active_status_to_csv(active_status: bool, serial_num: str, csv: List[List[str]]) -> None:
-    """ Add the serial number and the status of the sensor to each row within the .csv file.
+    """ 
+        Add the serial number and the status of the sensor to each row within the .csv file.
 
         Params:
             - active_status: Boolean value representing whether the sensor is on or off
             - serial_num: String value representing the serial number of the sensor
             - csv: List[List[str]] representing the .csv file
+        
+        Returns: None.
     """
     first_row = True
     for row in csv:
@@ -44,11 +50,14 @@ def add_serial_and_active_status_to_csv(active_status: bool, serial_num: str, cs
             row.append(serial_num)
 
 def add_data_to_csv(csv: List[List[str]], line: str) -> None:
-    """ Add the values of each category to the CSV.
+    """ 
+        Add the values of each category to the CSV.
 
         Params:
             - csv: a List[List[str]] which represents the csv which will now have its data filled in
             - line: a line (String) which contains the data of each column
+        
+        Returns: None.
     """
     columns = line.split(": ")
     row = []
@@ -68,11 +77,14 @@ def add_data_to_csv(csv: List[List[str]], line: str) -> None:
     csv.append(row)
 
 def convert_to_csv(path: str, csv: List[List[str]]) -> None:
-    """ Take the csv list and write it into a .csv file.
+    """ 
+        Take the csv list and write it into a .csv file.
 
         Params:
             - path: the path of the original .txt file
             - csv: List[List[str]] to convert to a full file
+        
+        Returns: None.
     """
     with open(path[:len(path) - 4] + ".csv", "w") as new_file:
         for row in csv:
@@ -81,10 +93,13 @@ def convert_to_csv(path: str, csv: List[List[str]]) -> None:
         new_file.close()
 
 def main(path: str) -> None:
-    """ Main method to execute the text file conversion process.
+    """ 
+        Main method to execute the text file conversion process.
 
         Params:
-            path: A String which represents the path of the text file.
+            - path: A String which represents the path of the text file.
+        
+        Returns: None.
     """
     csv = []
     with open(path) as file:
