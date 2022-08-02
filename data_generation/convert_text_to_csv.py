@@ -19,7 +19,7 @@ def add_categories_to_csv(csv: List[List[str]], line: str) -> None:
         if first_column:
             row.append(name_and_data[0])
             first_column = False
-        elif category == line[len(line) - len(category):]:
+        elif category == line[:-len(category)]:
             continue
         else:
             row.append(name_and_data[len(name_and_data) - 1])
