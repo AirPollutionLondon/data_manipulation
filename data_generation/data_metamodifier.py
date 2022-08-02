@@ -1,4 +1,3 @@
-from xmlrpc.server import SimpleXMLRPCRequestHandler
 import pandas as pd
 import argparse
 import random
@@ -33,8 +32,8 @@ def main(sensor_info_path: str, user_data_path: str, overwrite: bool) -> None:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("sensor_info_path", help = "Path at which the sensor info .csv exists")
+    parser.add_argument("sensor_metadata_path", help = "Path at which the sensor metadata .csv exists")
     parser.add_argument("user_data_path", help = "Path at which the user data .csv exists")
     parser.add_argument("--overwrite", "-o", help = "Whether or not to modify the files (if False makes new ones).", default = True)
     args = parser.parse_args()
-    main(args.sensor_info_path, args.user_data_path, args.overwrite)
+    main(args.sensor_metadata_path, args.user_data_path, args.overwrite)

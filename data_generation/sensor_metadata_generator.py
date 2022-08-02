@@ -1,3 +1,4 @@
+import string
 from typing import List
 import pandas as pd
 import random
@@ -44,7 +45,7 @@ def generate_unique_list(count: int) -> List[int]:
     """
     list = []
     for i in range(count):
-        item = random.randint(0, 1000000000 + count)
+        item = "".join([random.choice("1234567890" + string.ascii_lowercase) for _ in range(16)])
         if item not in list:
             list.append(item)
         else:
@@ -98,10 +99,10 @@ def main(path: str, count: int) -> None:
  
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("path", help = "Path to write the .csv to")
+    parser.add_argument("output_path", help = "Path to write the .csv to")
     parser.add_argument("-c", "--count", help = "Number of entries to write.")
     args = parser.parse_args()
     count = 10000
     if args.count != None:
         count = int(args.count)
-    main(args.path, count)
+    main(args.output_path, count)
