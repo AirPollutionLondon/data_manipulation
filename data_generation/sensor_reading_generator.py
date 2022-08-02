@@ -77,7 +77,7 @@ def main(count: int, out_path: str, metadata_path: str) -> None:
     sensor_reading_df["serialNumber"] = serial_list
         
     # Add the timestamp_lst into the df under column timestamp
-    sensor_reading_df["timeStamp"] = [time.strftime("%Y-%m-%d %H:%M") for time in generate_timestamp(count, datetime(2020, 1, 1, 0, 0))]
+    sensor_reading_df["timeStamp"] = [time.strftime("%Y-%m-%d %H:%M") for time in generate_timestamp(count, datetime.today())]
     
     # Generate a list of random VOC emissions within the range and add to 
     # the VOC(ppb) column in the dataframe
