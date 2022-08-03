@@ -12,7 +12,7 @@
 
 The generating data script will function to run everything - however it does require root access as it creates directories.
 
-In order to run (assuming repository is cloned into ~/AirPollutionLondon:
+In order to run (assuming repository is cloned into ~/AirPollutionLondon):
 
 1. In the directory where the file is located run the following commands.
 2. ```chmod +x generate_data.sh```
